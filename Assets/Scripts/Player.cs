@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Player : MonoBehaviour {
@@ -22,9 +23,16 @@ public class Player : MonoBehaviour {
         var inputForce = Input.GetAxis("Horizontal");
         r.AddForce(new Vector2(inputForce * speed,  0), ForceMode2D.Force);
         r.AddForce(new Vector2(0, Input.GetAxis("Vertical") * jumpforce));
+        
         if (Input.GetButtonDown("Fire1"))
         {
-            Instantiate(bullet, transform.position, Quaternion.identity);
+            var mousePosition = UnityEngine.Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            mousePosition.z = 0;
+            var bulletPosition = transform.position;
+            var direction = mousePosition - bulletPosition;
+            var bulletObject = Instantiate(bullet, transform.position, Quaternion.identity);
+            bulletObject.GetComponent<bullet>().direction = direction.normalized;
+            bulletObject.GetComponent<bullet>().Shoot();
         }
         
     }
