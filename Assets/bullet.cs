@@ -19,8 +19,12 @@ public class bullet : MonoBehaviour {
         var enemy = other.gameObject.GetComponent<EnemyController>();
         if (enemy != null) {
             enemy.hp -= 20;
+            enemy.TakeDamage();
             if (enemy.hp <= 0) {
-                Destroy(enemy.gameObject);
+                enemy.FatalDamage();
+                Destroy(enemy.gameObject,0.5f);
+                other.gameObject.GetComponent<CapsuleCollider2D>().enabled=false;
+                
             }
             Destroy(gameObject);
         }

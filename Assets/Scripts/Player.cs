@@ -33,6 +33,7 @@ public class Player : MonoBehaviour {
             var bulletObject = Instantiate(bullet, transform.position, Quaternion.identity);
             bulletObject.GetComponent<bullet>().direction = direction.normalized;
             bulletObject.GetComponent<bullet>().Shoot();
+            GetComponent<AudioSource>() .Play();
         }
         
     }
