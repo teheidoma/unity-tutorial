@@ -32,6 +32,7 @@ public class Player : MonoBehaviour {
             var direction = mousePosition - bulletPosition;
             var bulletObject = Instantiate(bullet, transform.position, Quaternion.identity);
             bulletObject.GetComponent<bullet>().direction = direction.normalized;
+            bulletObject.GetComponent<bullet>().owner = gameObject;
             bulletObject.GetComponent<bullet>().Shoot();
             GetComponent<AudioSource>() .Play();
         }
