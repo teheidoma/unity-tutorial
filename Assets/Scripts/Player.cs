@@ -4,7 +4,7 @@ using UnityEngine;
 public class Player : MonoBehaviour {
     [Range(0, 10)]
     public float speed = 0.3f;
-    [Range(0, 10)]
+    [Range(0, 100)]
     public float jumpforce = 0.3f;
     public Transform newPosition;
     public GameObject bullet;
@@ -18,11 +18,26 @@ public class Player : MonoBehaviour {
             transform.position = newPosition.position;
         }
         Rigidbody2D r = GetComponent<Rigidbody2D>();
+        if (r.linearVelocity.y == 0)
+        {
+            var axis = Input.GetAxis("Vertical");
+            if (axis > 0)
+            {
+                axis = 1;
+            }
+            else
+            {
+                axis = 0;
+            }
+
+            // r.AddForce(new Vector2(0, axis * jumpforce));
+            r.linearVelocity = new Vector2(r.linearVelocity.x, axis * jumpforce);
+        }
 
 
         var inputForce = Input.GetAxis("Horizontal");
         r.AddForce(new Vector2(inputForce * speed,  0), ForceMode2D.Force);
-        r.AddForce(new Vector2(0, Input.GetAxis("Vertical") * jumpforce));
+       
         
         if (Input.GetButtonDown("Fire1"))
         {
